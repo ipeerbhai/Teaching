@@ -45,19 +45,19 @@ contract ThinkSampleToken is ERC20 {
         // TODO: .18+ removes allowing a simple if ( address ) boolean.  Need to find blessed function.
         // for now, just return assuming a valid tokenowner.
 
-            remaining = allowedToSpend[tokenOwner][spender];
-            return remaining;
+        remaining = allowedToSpend[tokenOwner][spender];
+        return remaining;
     }
     
     
     function transfer(address to, uint tokens) public returns (bool success) {
         success = false;
-            if (tokens <= balanceOf(msg.sender)) {
-                ownerBalance[msg.sender] -= tokens;
-                ownerBalance[to] += tokens;
-                success = true;
-                Transfer(msg.sender, to, tokens);
-            }
+        if (tokens <= balanceOf(msg.sender)) {
+            ownerBalance[msg.sender] -= tokens;
+            ownerBalance[to] += tokens;
+            success = true;
+            Transfer(msg.sender, to, tokens);
+        }
         return success;
     }
 
