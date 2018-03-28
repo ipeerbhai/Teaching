@@ -1,8 +1,10 @@
+/* This contract is for instructional use only.  It intentionally is incomplete.  There are no warantees on this code of any sort. */
 pragma solidity ^0.4.18; 
 
-
-// copied from official github, changed to interface from contract
-// dropped member variables, as 4.16+ doesn't allow these any longer in interfaces.
+// Inspired by the EIP-20 document here: https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md
+// Alterations:
+// 1. changed to interface from contract for instructional purposes.
+// 2. moved member variables to contract per Solidity interface requirements.
 interface ERC20 {
     function totalSupply() public constant returns (uint _totalSupply);
     function balanceOf(address tokenOwner) public constant returns (uint balance);
