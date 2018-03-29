@@ -1,0 +1,33 @@
+{
+  "name": "teaching",
+  "version": "1.0.0",
+  "description": "This is a set of teaching examples.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ipeerbhai/Teaching.git"
+  },
+  "keywords": [
+    "Simple",
+    "example",
+    "to",
+    "get",
+    "started",
+    "in",
+    "NodeJS"
+  ],
+  "author": "Imran Peerbhai",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ipeerbhai/Teaching/issues"
+  },
+  "homepage": "https://github.com/ipeerbhai/Teaching#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "path": "^0.12.7"
+  }
+}
