@@ -1,10 +1,11 @@
-// Basic express + handlebars server standup example.
+// basic example using a deployed smart contract to add a new candidate
+// to a voter form.
 
 const express = require('express');
 const path = require('path');
 var app = express();
 app.use(express.json());       // to support JSON-encoded bodies
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/../public"));
 app.use(function (req, res, next) {
     if (req.is('text/*')) {
         req.text = '';
@@ -29,5 +30,5 @@ app.listen(app.get('port'), function () {
 
 // Ready to begin routing.
 app.get("/", function(req, res){
-    res.status(200).send("Hello, world");
+    res.render('home');
 });
