@@ -1,0 +1,27 @@
+{
+  "name": "web3js",
+  "version": "1.0.0",
+  "description": "Simple set of lessons for using web3 with nodejs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "web3",
+    "node",
+    "bundle",
+    "webpack"
+  ],
+  "author": "Imran Peerbhai",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "keccak": "^1.4.0"
+  },
+  "devDependencies": {
+    "truffle-solidity-loader": "0.0.8",
+    "webpack": "^4.4.1",
+    "webpack-dev-server": "^3.1.1"
+  }
+}
