@@ -2,7 +2,7 @@
   "name": "web3js",
   "version": "1.0.0",
   "description": "Simple set of lessons for using web3 with nodejs",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
