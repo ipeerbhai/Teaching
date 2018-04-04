@@ -4,6 +4,7 @@
 // import required librarires ( ES5 syntax )
 const express = require("express");
 const path = require("path");
+const solc = require("solc");
 const fs = require("fs");
 const Web3 = require("web3");
 const bodyParser = require("body-parser");
@@ -108,11 +109,11 @@ app.post("/v1/EnterCandidate/", (req, res) => {
         .getCandidateHash(web3.utils.fromAscii(fullName))
         .call({ from: account })
         .then(result => {
-            let returnInfo = {
-                "txHash":transactionHash,
-                "personHash":result
-            }
-            res.send(returnInfo);
+          let returnInfo = {
+            txHash: transactionHash,
+            personHash: result
+          };
+          res.send(returnInfo);
         });
     })
     .catch(err => {
@@ -137,4 +138,37 @@ app.post("/v1/EnterCandidate/", (req, res) => {
     }
   );
   */
+});
+
+//-----------------------------------------------------------------
+// Dynaamic section
+//-----------------------------------------------------------------
+
+app.post("/v1/DeployDynamicContract/", (req, res) => {
+  // load and compile the file, get an interface and the compiled bytecode
+  let contractSourceCode = fs.readFileSync("./demo.sol", "utf8");
+  let compiledContract = solc.compile(contractSourceCode, 1); // 1 == optimization level 1
+  let abi = JSON.parse(compiledContract.contracts[":demo"].interface);
+  let byteCode = compiledContract.contracts[":demo"].bytecode;
+
+  // make a web3 contract instance, then deploy and get a deployment promise.
+  dynamicContract  = new web3.eth.Contract(abi);
+  console.log(dynamicContract);
+  dynamicPromise = dynamicContract.deploy({
+      data:byteCode
+  }).send({
+    from: account,
+    gas: 1500000,
+    gasprice: 2000000000
+  }); // deploy the contract and tell it to limit gas and gasprice.
+
+  // call the contract's sayHello pure method
+  dynamicPromise.then(newContractInstance => {
+      newContractInstance.methods.sayHello().call({from:account}).then(result=>{
+          res.send(result);
+      });
+  });
+
+
+
 });

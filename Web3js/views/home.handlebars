@@ -24,6 +24,7 @@
         <input type="submit" class="btn btn-info" value="Submit Button" />
     </form>
     <p id="subResult"></p>
+    <button id="btnDeployDynamic" onclick="DeployDynamic()" class="btn btn-primary">Deploy Dynamic Contract</button>
 </section>
 <script>
     $("#frmAddCandidate").submit(function (e) {
@@ -43,4 +44,12 @@
             $("#subResult").append(output);
         });
     });
+
+    function DeployDynamic() {
+        let URL = "/v1/DeployDynamicContract/";
+        $("#subResult").html("Processing...");
+        $.post(URL).done(result=>{$("#subResult").append(result);})
+
+    }
+
 </script>
