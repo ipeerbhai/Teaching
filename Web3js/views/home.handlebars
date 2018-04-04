@@ -1,2 +1,45 @@
-<h1>Hello fracking world!</h1>
-<div id="elementHello"></div>
+<section class="container-fluid">
+    <h1>Add a candidate</h1>
+    <div id="elementHello"></div>
+
+    <form id="frmAddCandidate" action="/v1/EnterCandidate/" method="POST">
+        <div class="table-responsive col-6">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input type="text" id="txtFName" placeholder="First" </td>
+                            <td>
+                                <input type="text" id="txtLName" placeholder="Last" </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <input type="submit" class="btn btn-info" value="Submit Button" />
+    </form>
+    <p id="subResult"></p>
+</section>
+<script>
+    $("#frmAddCandidate").submit(function (e) {
+        e.preventDefault();
+        var $form = $(this);
+        var URL = $form.attr('action');
+        console.log(URL);
+
+        var _firstName = $("#txtFName").val();
+        var _lastName = $("#txtLName").val();
+        var posting = $.post(URL, {
+            firstName: _firstName,
+            lastName: _lastName
+        });
+        posting.done(function (data) {
+            $("#subResult").append(data);
+        });
+    });
+</script>
