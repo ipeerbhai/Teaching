@@ -39,11 +39,15 @@ const HelloContractObject = JSON.parse(
 );
 
 // connect to the smart contract.
-var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
-var connectedContractPromise = new web3.eth.Contract(
+var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545")); // for ganache
+// var net = require("net");
+//var web3 = new Web3(new Web3.providers.WebsocketProvider("http://localhost:7545"));
+//var web3 = new Web3(new Web3.providers.IpcProvider(ipcPath, net)); // for geth
+
+var connectedContract = new web3.eth.Contract(
   HelloContractObject.abi,
   HelloContractObject.networks["5777"].address,
-  null
+  { gasPrice: "2000000000" }
 );
 
 // Get the account.  In real scenarios, we would use metamask's injected web3.currentprovider to get a real account.
@@ -81,6 +85,56 @@ app.get("/", function(req, res) {
 });
 
 app.post("/v1/EnterCandidate/", (req, res) => {
-  console.log(req.body.firstName);
-  res.send("ok");
+  let firstName = req.body.firstName;
+  let lastName = req.body.lastName;
+  let fullName = firstName + " " + lastName;
+
+  // use the connected contract to call the contract's AddCandidate method
+  // WARNING:
+  //    We are using the event system to get the return value from ganache
+  //    Real transactions can take hours to return, and post will timeout.
+  //    Better to return only the transaction hash and then do something like send
+  //    email!
+
+  // actually send the transaction.
+  connectedContract.methods
+    .AddCandidate(web3.utils.fromAscii(fullName))
+    .send({ from: account })
+    .then(result => {
+      let transactionHash = result.transactionHash;
+
+      // we're in a test environment with ganache.  We can call the get and return the hash.
+      connectedContract.methods
+        .getCandidateHash(web3.utils.fromAscii(fullName))
+        .call({ from: account })
+        .then(result => {
+            let returnInfo = {
+                "txHash":transactionHash,
+                "personHash":result
+            }
+            res.send(returnInfo);
+        });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  connectedContract.once("candidateAdded", null, function(error, event) {
+    if (error) {
+      console.log(error);
+    }
+    // here's where we'd do something with the user.
+    if (event) {
+      console.log(event);
+    }
+  });
+
+  /* another way to do it
+  var candidateAddedEvent = connectedContract.events.candidateAdded(
+    { filter: { from: account } },
+    function(error, event) {
+      console.log(event);
+    }
+  );
+  */
 });

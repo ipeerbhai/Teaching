@@ -10,23 +10,28 @@ contract HelloContract {
         }
     }
 
-    function AddCandidate(string candidateName) external returns (bool) {
+    function AddCandidate(string candidateName) external returns (bool success) {
+        success = false;
         // check to see if the candidate name is already done.
         if (bytes(candidateName).length > 0) {
             bytes32 empty;
             if (candidates[candidateName] == empty) {
                 // we can add!
                 candidates[candidateName] = keccak256(candidateName);
-                return true;
+                success = true;
             }
         } else {
             // we can't add -- no name.
-            return false; // we can't add -- already there.
+            success = false; // we can't add -- already there.
         }
+
+        // raise an event we can filter by our address, return
+        candidateAdded(msg.sender, success);
+        return success;
         
-        // Whoops.
-        return false;
     }
 
     function() external payable {}
+
+    event candidateAdded(address indexed _from, bool success);
 }

@@ -30,7 +30,6 @@
         e.preventDefault();
         var $form = $(this);
         var URL = $form.attr('action');
-        console.log(URL);
 
         var _firstName = $("#txtFName").val();
         var _lastName = $("#txtLName").val();
@@ -39,7 +38,9 @@
             lastName: _lastName
         });
         posting.done(function (data) {
-            $("#subResult").append(data);
+            console.log(data);
+            let output = JSON.stringify(data);
+            $("#subResult").append(output);
         });
     });
 </script>
