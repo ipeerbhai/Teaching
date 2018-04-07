@@ -13,7 +13,7 @@ const bodyParser = require("body-parser");
 var app = express();
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-app.use(express.static(__dirname + "/../public"));
+app.use(express.static(__dirname + "/../public")); // blindly serve this directory and mount it to "/"
 app.use(function(req, res, next) {
   if (req.is("text/*")) {
     req.text = "";
@@ -101,17 +101,18 @@ app.post("/v1/EnterCandidate/", (req, res) => {
   connectedContract.methods
     .AddCandidate(web3.utils.fromAscii(fullName))
     .send({ from: account })
-    .then(result => {
-      let transactionHash = result.transactionHash;
+    .then(contractSendResult => {
+      let transactionHash = contractSendResult.transactionHash;
 
+      // WARNING: THIS IS FOR MATCHING SLIDES.  DON'T DO CALL getCandidateHash immediately IN REALITY.
       // we're in a test environment with ganache.  We can call the get and return the hash.
       connectedContract.methods
         .getCandidateHash(web3.utils.fromAscii(fullName))
         .call({ from: account })
-        .then(result => {
+        .then(resultCandidateHash => {
           let returnInfo = {
             txHash: transactionHash,
-            personHash: result
+            personHash: resultCandidateHash
           };
           res.send(returnInfo);
         });
@@ -120,13 +121,13 @@ app.post("/v1/EnterCandidate/", (req, res) => {
       console.log(err);
     });
 
-  connectedContract.once("candidateAdded", null, function(error, event) {
+  connectedContract.once("candidateAdded", null, function(error, eventObject) {
     if (error) {
       console.log(error);
     }
     // here's where we'd do something with the user.
-    if (event) {
-      console.log(event);
+    if (eventObject) {
+      console.log(eventObject);
     }
   });
 
