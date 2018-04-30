@@ -4,8 +4,11 @@ This repo is a set of experimental programs I've created to help students of DAp
 ## Ethereum ##
 This directory contains simple examples of smart contracts.
 
+## HTML ##
+This directory contains some examples of HTML5, CSS3, and Bootstrap 4.
+
 ## NodeJS ##
-Timing, Promise, and Express standup examples in NodeJS
+Timing, Promise, and Express standup examples in NodeJS.
 
 ## Web3js ##
 This directory contains a large example that shows:
