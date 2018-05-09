@@ -36,3 +36,8 @@ app.get("/", function (req, res) {
     // For in-class exercise, comment out above line of code and add your own like the below. 
     res.render('home');
 });
+
+app.get("/candidates/AddCandidate/", function (req, res) {
+    // Let's show a page for adding a new candidate
+    res.render('AddCandidate');
+});
