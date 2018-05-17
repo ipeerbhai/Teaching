@@ -1,8 +1,8 @@
-pragma solidity ^0.4.19; 
+pragma solidity ^0.4.23; 
 
 // Intreface for animals
 interface Animal {
-    function speak() external returns (string);
+    function speak() external constant returns (string);
     function walk() external returns (uint);
 }
 
@@ -16,7 +16,7 @@ library Movement {
 contract cat is Animal {
     using Movement for cat;
     uint private catPosition;
-    function speak() external returns(string) {
+    function speak() external constant returns(string) {
         return ("MEOW");
     }
     

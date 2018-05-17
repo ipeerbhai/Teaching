@@ -53,5 +53,3 @@ library StringExtension {
         return (keccak256(selfString) == keccak256(compareTarget));
     }
 }
-
-
