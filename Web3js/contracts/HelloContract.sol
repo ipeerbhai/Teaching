@@ -26,7 +26,7 @@ contract HelloContract {
         }
 
         // raise an event we can filter by our address, return
-        candidateAdded(msg.sender, success);
+        emit candidateAdded(msg.sender, success);
         return success;
         
     }
