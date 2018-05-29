@@ -1,4 +1,4 @@
-pragma solidity ^0.4.19; 
+pragma solidity ^0.4.23; 
 
 contract HelloContract {
     mapping(bytes32 => uint) private votes;
