@@ -4,7 +4,7 @@ contract HelloContract {
     mapping(bytes32 => uint) private votes;
     mapping(string => bytes32) private candidates;
 
-    function getCandidateHash(string candidateName) external view returns(bytes32 cadidateHash) {
+    function getCandidateHash(string candidateName) external view returns(bytes32 candidateHash) {
         if (bytes(candidateName).length > 0) {
             return candidates[candidateName];
         }
