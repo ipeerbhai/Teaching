@@ -17,7 +17,7 @@ contract HelloContract {
             bytes32 empty;
             if (candidates[candidateName] == empty) {
                 // we can add!
-                candidates[candidateName] = keccak256(candidateName);
+                candidates[candidateName] = keccak256(abi.encodePacked(candidateName));
                 success = true;
             }
         } else {
