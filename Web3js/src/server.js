@@ -35,8 +35,8 @@ app.engine("handlebars", handlebars.engine); // to plumb in handlebars framework
 app.set("view engine", "handlebars"); // to start the express engine handler for views.
 
 // get the deployed contract
-const HelloContractObject = JSON.parse(
-  fs.readFileSync("./build/contracts/HelloContract.json", "utf8")
+const CandidateManagerObject = JSON.parse(
+  fs.readFileSync("./build/contracts/CandidateManager.json", "utf8")
 ); // this JSON file was created by running "truffle compile"
 
 // connect to the smart contract.
@@ -46,8 +46,8 @@ var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545")); /
 //var web3 = new Web3(new Web3.providers.IpcProvider(ipcPath, net)); // for Geth nodes to support eventing
 
 var connectedContract = new web3.eth.Contract(
-  HelloContractObject.abi,
-  HelloContractObject.networks["5777"].address,
+  CandidateManagerObject.abi,
+  CandidateManagerObject.networks["5777"].address,
   { gasPrice: "2000000000", gas: 6721975 }
 ); // Willing to pay 20 GWEI per GAS, willing to buy 6, 721, 975 GAS.  Super expensive!
 
@@ -129,9 +129,9 @@ app.post("/v1/EnterCandidate/", (req, res) => {
     if (eventObject) {
       console.log(eventObject);
     }
-  }); // This is an event listener.  Not used in Ganache yet, but other nodes supoort it.  Here's how you setup a one time listen for a fired event.
+  }); // This is an event listener.  Throws a warning! Because not available in Ganache yet, but other nodes supoort it.  Here's how you setup a one time listen for a fired event.
 
-  /* another way to setup a listener
+  /* another way to setup a listener -- don't use in ganache
   var candidateAddedEvent = connectedContract.events.candidateAdded(
     { filter: { from: account } },
     function(error, event) {

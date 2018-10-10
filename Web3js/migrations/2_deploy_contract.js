@@ -1,5 +1,5 @@
-var HelloContract = artifacts.require("HelloContract");
+var CandidateManagerContract = artifacts.require("CandidateManager");
 
 module.exports = function(deployer) {
-    deployer.deploy(HelloContract);
+    deployer.deploy(CandidateManagerContract);
 }
