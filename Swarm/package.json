@@ -1,0 +1,21 @@
+{
+  "name": "swarm",
+  "version": "1.0.0",
+  "description": "A simple ethereum swarm example",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "fs": "0.0.1-security",
+    "multer": "^1.4.0",
+    "path": "^0.12.7",
+    "swarm-js": "^0.1.39"
+  }
+}

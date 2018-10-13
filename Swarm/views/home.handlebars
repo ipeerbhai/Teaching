@@ -1,0 +1,51 @@
+<h1>Upload a picture</h1>
+<form id="uploadForm" method="post" enctype="multipart/form-data" action="/v1/uploadFile">
+    <input type="file" name="file">
+    <input class="btn btn-primary" type="button" value="Submit" onclick="sendData()">
+</form>
+
+<script>
+    function sendData() {
+        $("#fileHash").val("starting!");
+        var URL = $('#uploadForm').attr('action');
+        jQuery.ajax({
+            type: 'POST',
+            url: URL,
+            data: new FormData($("#uploadForm")[0]),
+            cache: false,
+            processData: false,
+            contentType: false
+        }).done(function (result) {
+            $("#fileHash").val(result);
+        });
+        return (false);
+    }
+</script>
+
+<div id="petPictureHolder" />
+
+<hr />
+
+<h1>Download Previously uploaded picture</h1>
+<input type="text" id="fileHash" style="width:600px" /> Uploaded File Hash <br />
+<a href="#" onclick="loadImage()" class="btn btn-primary">Load Image</a>
+
+<script type="text/javascript">
+
+    function loadImage() {
+        var _fileHash = $("#fileHash").val();
+        // get the cat image I uploaded and stored a hash to.
+        $.post("/v1/getFile", {
+            fileHash: _fileHash
+        }).done(function (data) {
+            var image = document.createElement('img');
+
+            image.src = "data:image/png;base64," + data;
+
+            image.width = 100;
+            image.height = 100;
+            image.alt = "here should be some image";
+            document.body.appendChild(image);
+        });
+    }
+</script>
